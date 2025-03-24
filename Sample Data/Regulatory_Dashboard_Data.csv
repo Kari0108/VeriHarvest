@@ -1,0 +1,11 @@
+Batch_ID,Product_Name,Supplier,Compliance_Score,Flagged,Inspection_Date
+BATCH_201,Organic Apples,Farm A,98,Yes,2025-01-31 12:32:45.443456
+BATCH_202,Fresh Milk,Dairy B,81,Yes,2025-02-22 12:32:45.443466
+BATCH_203,Almonds,Farm C,100,Yes,2025-02-08 12:32:45.443470
+BATCH_204,Brown Rice,Grain Supplier D,75,Yes,2025-01-20 12:32:45.443473
+BATCH_205,Chicken Breast,Poultry E,71,No,2025-01-18 12:32:45.443476
+BATCH_206,Salmon Fillet,Fishery F,100,Yes,2025-03-14 12:32:45.443478
+BATCH_207,Whole Wheat Bread,Bakery G,77,No,2025-02-27 12:32:45.443481
+BATCH_208,Honey,Bee Farm H,79,No,2025-02-28 12:32:45.443485
+BATCH_209,Olive Oil,Olive Farm I,92,Yes,2025-02-18 12:32:45.443489
+BATCH_210,Cheddar Cheese,Dairy J,93,No,2025-02-08 12:32:45.443492
