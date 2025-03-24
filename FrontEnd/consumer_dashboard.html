@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VeriHarvest - Consumer Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        /* Global Styles */
+        :root {
+            --primary: #2e7d32;
+            --primary-light: #60ad5e;
+            --primary-dark: #005005;
+            --secondary: #1565c0;
+            --secondary-light: #5e92f3;
+            --secondary-dark: #003c8f;
+            --warning: #ff9800;
+            --danger: #f44336;
+            --success: #4caf50;
+            --light: #f5f5f5;
+            --dark: #212121;
+            --white: #ffffff;
+            --gray: #757575;
+            --light-gray: #eeeeee;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: var(--white);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .logo i {
+            margin-right: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .user-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            object-fit: cover;
+        }
+        
+        /* Mobile menu */
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Dashboard Content */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 6rem auto 2rem;
+            padding: 1rem;
+            flex: 1;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .dashboard-title h1 {
+            font-size: 2rem;
+            color: var(--dark);
+        }
+        
+        .dashboard-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .action-btn {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+        
+        .action-btn i {
+            margin-right: 0.5rem;
+        }
+        
+        .action-btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .card {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary-light);
+            color: var(--white);
+            border-radius: 50%;
+            font-size: 1.2rem;
+        }
+        
+        .card-body {
+            margin-bottom: 1rem;
+        }
+        
+        .card-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .card-footer {
+            display: flex;
+            align-items: center;
+            color: var(--success);
+            font-size: 0.9rem;
+        }
+        
+        .card-footer i {
+            margin-right: 0.5rem;
+        }
+        
+        .chart-container {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .chart-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .chart-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .chart-action {
+            background-color: var(--light-gray);
+            border: none;
+            border-radius: 4px;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .chart-action:hover {
+            background-color: var(--gray);
+            color: var(--white);
+        }
+        
+        .chart-body {
+            height: 300px;
+            position: relative;
+        }
+        
+        /* QR Scanner Section */
+        .qr-scanner-section {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .qr-scanner-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+        
+        .qr-scanner-description {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+        
+        .qr-scanner-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--secondary);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+        
+        .qr-scanner-btn i {
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .qr-scanner-btn:hover {
+            background-color: var(--secondary-dark);
+        }
+        
+        .qr-scanner-preview {
+            width: 100%;
+            max-width: 300px;
+            height: 300px;
+            margin: 1rem auto;
+            background-color: var(--light-gray);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-size: 1.2rem;
+        }
+        
+        /* Recent Scans Table */
+        .recent-scans {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .recent-scans-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .recent-scans-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .recent-scans-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .recent-scans-action {
+            background-color: var(--light-gray);
+            border: none;
+            border-radius: 4px;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .recent-scans-action:hover {
+            background-color: var(--gray);
+            color: var(--white);
+        }
+        
+        .recent-scans-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .recent-scans-table th,
+        .recent-scans-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .recent-scans-table th {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .recent-scans-table tr:hover {
+            background-color: var(--light);
+        }
+        
+        .product-name {
+            display: flex;
+            align-items: center;
+        }
+        
+        .product-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.5rem;
+        }
+        
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.5rem;
+            background-color: var(--success);
+            color: var(--white);
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        
+        .verified-badge i {
+            margin-right: 0.25rem;
+        }
+        
+        .non-verified-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.5rem;
+            background-color: var(--warning);
+            color: var(--dark);
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        
+        .non-verified-badge i {
+            margin-right: 0.25rem;
+        }
+        
+        .blockchain-yes-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.5rem;
+            background-color: var(--secondary-light);
+            color: var(--white);
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        
+        .blockchain-no-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.5rem;
+            background-color: var(--light-gray);
+            color: var(--dark);
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        
+        .blockchain-yes-badge i,
+        .blockchain-no-badge i {
+            margin-right: 0.25rem;
+        }
+        
+        .view-details {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .view-details:hover {
+            color: var(--secondary-dark);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--light);
+            padding: 2rem 1rem;
+            margin-top: auto;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+        
+        .footer-section p {
+            color: var(--light);
+            opacity: 0.8;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+        
+        .footer-logo i {
+            margin-right: 0.5rem;
+            color: var(--primary-light);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            text-decoration: none;
+            color: var(--light);
+            opacity: 0.8;
+            transition: opacity 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-icons a {
+            color: var(--white);
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: var(--primary-light);
+        }
+        
+        .copyright {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.6;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background-color: var(--white);
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                transform: translateY(-150%);
+                transition: transform 0.3s ease-in;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+            }
+            
+            .nav-links li {
+                margin: 1rem 0;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .dashboard-actions {
+                margin-top: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-seedling"></i>
+                VeriHarvest
+            </a>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="technology.html">Technology</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="authentication.html">Login</a></li>
+            </ul>
+            <div class="user-profile">
+                <img src="/api/placeholder/40/40" alt="User Profile">
+                <span>John Doe</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <div class="dashboard-title">
+                <h1>Consumer Dashboard</h1>
+                <p>Track your food journey and verify authenticity</p>
+            </div>
+            <div class="dashboard-actions">
+                <a href="#" class="action-btn">
+                    <i class="fas fa-history"></i> Scan History
+                </a>
+                <a href="#" class="action-btn">
+                    <i class="fas fa-cog"></i> Settings
+                </a>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Total Scans</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-value">87</div>
+                    <div class="card-label">Products scanned</div>
+                </div>
+                <div class="card-footer">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>12% increase this month</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Verified Products</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-value">79</div>
+                    <div class="card-label">Authenticated products</div>
+                </div>
+                <div class="card-footer">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>95% verification rate</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Product Categories</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-value">14</div>
+                    <div class="card-label">Different food categories</div>
+                </div>
+                <div class="card-footer">
+                    <i class="fas fa-plus"></i>
+                    <span>3 new categories explored</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-header">
+                <h3 class="chart-title">Monthly Scan Activity</h3>
+                <div class="chart-actions">
+                    <button class="chart-action">Week</button>
+                    <button class="chart-action">Month</button>
+                    <button class="chart-action">Year</button>
+                </div>
+            </div>
+            <div class="chart-body">
+                <canvas id="scanActivityChart"></canvas>
+            </div>
+        </div>
+
+        <div class="qr-scanner-section">
+            <h3 class="qr-scanner-title">Scan Product QR Code</h3>
+            <p class="qr-scanner-description">Verify the authenticity and trace the journey of your food products</p>
+            <div class="qr-scanner-preview">
+                <i class="fas fa-camera"></i> Camera preview will appear here
+            </div>
+            <button class="qr-scanner-btn">
+                <i class="fas fa-qrcode"></i> Scan QR Code
+            </button>
+        </div>
+
+        <div class="recent-scans">
+            <div class="recent-scans-header">
+                <h3 class="recent-scans-title">Recent Scans</h3>
+                <div class="recent-scans-actions">
+                    <button class="recent-scans-action">
+                        <i class="fas fa-filter"></i>
+                    </button>
+                    <button class="recent-scans-action">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+            </div>
+            <table class="recent-scans-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Date</th>
+                        <th>Origin</th>
+                        <th>Status</th>
+                        <th>Blockchain Verified</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="product-name">
+                                <div class="product-icon">
+                                    <i class="fas fa-apple-alt"></i>
+                                </div>
+                                <span>Organic Apples</span>
+                            </div>
+                        </td>
+                        <td>Mar 15, 2025</td>
+                        <td>Washington, USA</td>
+                        <td>
+                            <div class="verified-badge">
+                                <i class="fas fa-check"></i> Verified
+                            </div>
+                        </td>
+                        <td>
+                            <div class="blockchain-yes-badge">
+                                <i class="fas fa-link"></i> Yes
+                            </div>
+                        </td>
+                        <td>
+                            <a href="#" class="view-details">View Details</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="product-name">
+                                <div class="product-icon">
+                                    <i class="fas fa-cheese"></i>
+                                </div>
+                                <span>Artisan Cheese</span>
+                            </div>
+                        </td>
+                        <td>Mar 12, 2025</td>
+                        <td>Vermont, USA</td>
+                        <td>
+                            <div class="verified-badge">
+                                <i class="fas fa-check"></i> Verified
+                            </div>
+                        </td>
+                        <td>
+                            <div class="blockchain-yes-badge">
+                                <i class="fas fa-link"></i> Yes
+                            </div>
+                        </td>
+                        <td>
+                            <a href="#" class="view-details">View Details</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="product-name">
+                                <div class="product-icon">
+                                    <i class="fas fa-wine-bottle"></i>
+                                </div>
+                                <span>Red Wine</span>
+                            </div>
+                        </td>
+                        <td>Mar 10, 2025</td>
+                        <td>Napa Valley, USA</td>
+                        <td>
+                            <div class="non-verified-badge">
+                                <i class="fas fa-exclamation-triangle"></i> Pending
+                            </div>
+                        </td>
+                        <td>
+                            <div class="blockchain-no-badge">
+                                <i class="fas fa-times"></i> No
+                            </div>
+                        </td>
+                        <td>
+                            <a href="#" class="view-details">View Details</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="product-name">
+                                <div class="product-icon">
+                                    <i class="fas fa-fish"></i>
+                                </div>
+                                <span>Wild Salmon</span>
+                            </div>
+                        </td>
+                        <td>Mar 8, 2025</td>
+                        <td>Alaska, USA</td>
+                        <td>
+                            <div class="verified-badge">
+                                <i class="fas fa-check"></i> Verified
+                            </div>
+                        </td>
+                        <td>
+                            <div class="blockchain-yes-badge">
+                                <i class="fas fa-link"></i> Yes
+                            </div>
+                        </td>
+                        <td>
+                            <a href="#" class="view-details">View Details</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="product-name">
+                                <div class="product-icon">
+                                    <i class="fas fa-bread-slice"></i>
+                                </div>
+                                <span>Sourdough Bread</span>
+                            </div>
+                        </td>
+                        <td>Mar 5, 2025</td>
+                        <td>San Francisco, USA</td>
+                        <td>
+                            <div class="verified-badge">
+                                <i class="fas fa-check"></i> Verified
+                            </div>
+                        </td>
+                        <td>
+                            <div class="blockchain-no-badge">
+                                <i class="fas fa-times"></i> No
+                            </div>
+                        </td>
+                        <td>
+                            <a href="#" class="view-details">View Details</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <i class="fas fa-seedling"></i>
+                    VeriHarvest
+                </div>
+                <p>Ensuring food safety and authenticity through AI, IoT, and blockchain technology.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="technology.html">Our Technology</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="case-studies.html">Case Studies</a></li>
+                    <li><a href="whitepapers.html">White Papers</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                    <li><a href="cookies.html">Cookie Policy</a></li>
+                    <li><a href="gdpr.html">GDPR Compliance</a></li>
+                </ul>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2025 VeriHarvest. All rights reserved.
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // JavaScript for mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (mobileMenu) {
+                mobileMenu.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                });
+            }
+            
+            // Chart.js implementation for scan activity
+            const ctx = document.getElementById('scanActivityChart').getContext('2d');
+            const scanActivityChart = new Chart(ctx, {
+                typetype: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: 'Product Scans',
+                        data: [12, 19, 15, 17, 22, 25, 32, 35, 28, 20, 15, 10],
+                        backgroundColor: 'rgba(46, 125, 50, 0.2)',
+                        borderColor: 'rgba(46, 125, 50, 1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: 'rgba(46, 125, 50, 1)',
+                        tension: 0.4
+                    }, {
+                        label: 'Verified Products',
+                        data: [10, 15, 13, 15, 20, 24, 30, 34, 26, 18, 13, 8],
+                        backgroundColor: 'rgba(21, 101, 192, 0.2)',
+                        borderColor: 'rgba(21, 101, 192, 1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: 'rgba(21, 101, 192, 1)',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    }
+                }
+            });
+            
+            // QR Scanner button functionality
+            const scannerBtn = document.querySelector('.qr-scanner-btn');
+            if (scannerBtn) {
+                scannerBtn.addEventListener('click', function() {
+                    alert('QR Scanner functionality would be implemented here');
+                    // In a real implementation, this would activate the device camera
+                    // and handle the QR code scanning process
+                });
+            }
+            
+            // Filter button functionality for recent scans
+            const filterBtn = document.querySelector('.recent-scans-action:first-child');
+            if (filterBtn) {
+                filterBtn.addEventListener('click', function() {
+                    alert('Filter functionality would be implemented here');
+                });
+            }
+            
+            // Download button functionality for recent scans
+            const downloadBtn = document.querySelector('.recent-scans-action:last-child');
+            if (downloadBtn) {
+                downloadBtn.addEventListener('click', function() {
+                    alert('Download functionality would be implemented here');
+                });
+            }
+            
+            // Chart view toggle functionality
+            const chartActions = document.querySelectorAll('.chart-action');
+            if (chartActions.length) {
+                chartActions.forEach(action => {
+                    action.addEventListener('click', function() {
+                        // Remove active class from all buttons
+                        chartActions.forEach(btn => btn.classList.remove('active'));
+                        
+                        // Add active class to clicked button
+                        this.classList.add('active');
+                        
+                        // In a real implementation, this would update the chart data
+                        // based on the selected time period (week, month, year)
+                        alert(Chart view changed to: ${this.textContent});
+                    });
+                });
+                
+                // Set first option as active by default
+                chartActions[0].classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>

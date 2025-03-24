@@ -1,0 +1,1142 @@
+technology
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Technology - VeriHarvest</title>
+    <meta name="description" content="Learn about VeriHarvest's blockchain and IoT technology for ensuring food safety and authenticity throughout the supply chain.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary: #2e7d32;
+            --primary-light: #60ad5e;
+            --primary-dark: #005005;
+            --secondary: #1565c0;
+            --secondary-light: #5e92f3;
+            --secondary-dark: #003c8f;
+            --warning: #ff9800;
+            --danger: #f44336;
+            --light: #f5f5f5;
+            --dark: #212121;
+            --white: #ffffff;
+            --gray: #757575;
+            --light-gray: #eeeeee;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: var(--white);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .logo i {
+            margin-right: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a.active {
+            color: var(--primary);
+            font-weight: 700;
+        }
+        
+        /* Mobile menu */
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/api/placeholder/1200/400') no-repeat center center/cover;
+            height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-align: center;
+            margin-top: 70px;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease 0.2s;
+            animation-fill-mode: both;
+        }
+        
+        /* Section Styles */
+        .section {
+            padding: 5rem 0;
+        }
+        
+        .section-heading {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-heading h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .section-heading p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Technology Overview */
+        .tech-overview {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin-bottom: 5rem;
+        }
+        
+        .tech-overview:nth-child(even) {
+            direction: rtl;
+        }
+        
+        .tech-overview:nth-child(even) .tech-content {
+            direction: ltr;
+        }
+        
+        .tech-overview:nth-child(even) .tech-image {
+            direction: ltr;
+        }
+        
+        .tech-content {
+            padding: 2rem;
+        }
+        
+        .tech-content h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .tech-content p {
+            margin-bottom: 1.5rem;
+            color: var(--gray);
+        }
+        
+        .tech-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tech-features li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 2rem;
+            color: var(--gray);
+        }
+        
+        .tech-features li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+        
+        .tech-image {
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tech-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .tech-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* Process Flow */
+        .process-flow {
+            background-color: var(--light-gray);
+            padding: 5rem 0;
+        }
+        
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            position: relative;
+        }
+        
+        .process-steps::before {
+            content: '';
+            position: absolute;
+            top: 70px;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background-color: var(--primary-light);
+            z-index: 1;
+        }
+        
+        .process-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 18%;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 3;
+        }
+        
+        .step-icon {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background-color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .step-description {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        /* Technology Cards */
+        .tech-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .tech-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .tech-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tech-card-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .tech-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .tech-card p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Technical Specs */
+        .specs-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .specs-tab {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--gray);
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .specs-tab.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+        }
+        
+        .specs-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .specs-content.active {
+            display: block;
+        }
+        
+        .specs-list {
+            list-style: none;
+            padding: 1rem;
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .specs-list li {
+            padding: 1rem;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .specs-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .specs-list strong {
+            color: var(--primary);
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            background-color: var(--light-gray);
+        }
+        
+        .faq-item {
+            background-color: var(--white);
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .faq-question i {
+            transition: transform 0.3s;
+        }
+        
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .faq-answer p {
+            padding-bottom: 1.5rem;
+            color: var(--gray);
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/api/placeholder/1200/400') no-repeat center center/cover;
+            color: var(--white);
+            text-align: center;
+            padding: 5rem 0;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-section p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+        
+        .btn-cta {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--white);
+            color: var(--primary);
+            transform: translateY(-3px);
+            background-color: var(--white);
+            color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--light);
+            padding: 2rem 1rem;
+            margin-top: auto;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+        
+        .footer-section p {
+            color: var(--light);
+            opacity: 0.8;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+        
+        .footer-logo i {
+            margin-right: 0.5rem;
+            color: var(--primary-light);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            text-decoration: none;
+            color: var(--light);
+            opacity: 0.8;
+            transition: opacity 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-icons a {
+            color: var(--white);
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: var(--primary-light);
+        }
+        
+        .copyright {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.6;
+            font-size: 0.9rem;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .tech-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .process-steps {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 2rem;
+            }
+            
+            .process-steps::before {
+                display: none;
+            }
+            
+            .process-step {
+                width: 45%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background-color: var(--white);
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                transform: translateY(-150%);
+                transition: transform 0.3s ease-in;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+            }
+            
+            .nav-links li {
+                margin: 1rem 0;
+            }
+            
+            .tech-overview {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .tech-overview:nth-child(even) {
+                direction: ltr;
+            }
+            
+            .tech-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .process-step {
+                width: 100%;
+            }
+            
+            .section-heading h2 {
+                font-size: 2rem;
+            }
+            
+            .tech-content h3 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-seedling"></i>
+                VeriHarvest
+            </a>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="technology.html" class="active">Technology</a></li>
+                <li><a href="authentication.html">Login</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="container">
+            <h1>Our Technology</h1>
+            <p>Innovative blockchain and IoT solutions for food traceability and authentication</p>
+        </div>
+    </header>
+    
+    <!-- Technology Overview Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Technology Overview</h2>
+                <p>VeriHarvest combines cutting-edge blockchain technology with IoT sensors to provide end-to-end food traceability and authentication.</p>
+            </div>
+            
+            <div class="tech-overview">
+                <div class="tech-content">
+                    <h3>Blockchain-Based Authentication</h3>
+                    <p>Our distributed ledger technology creates an immutable record of each food product's journey from farm to table, ensuring transparency and trust throughout the supply chain.</p>
+                    <ul class="tech-features">
+                        <li>Tamper-proof transaction records</li>
+                        <li>Real-time verification capabilities</li>
+                        <li>Smart contracts for automated compliance</li>
+                        <li>Decentralized data storage for security</li>
+                    </ul>
+                </div>
+                <div class="tech-image">
+                    <img src="blockchain.JPG" alt="Blockchain Technology">
+                </div>
+            </div>
+            
+            <div class="tech-overview">
+                <div class="tech-content">
+                    <h3>IoT Sensor Network</h3>
+                    <p>Our advanced IoT sensors continuously monitor critical parameters throughout the supply chain, ensuring food products remain safe and within optimal conditions.</p>
+                    <ul class="tech-features">
+                        <li>Temperature and humidity tracking</li>
+                        <li>Geolocation monitoring</li>
+                        <li>Contamination detection</li>
+                        <li>Real-time alerts and notifications</li>
+                    </ul>
+                </div>
+                <div class="tech-image">
+                    <img src="iot_photo.JPG" alt="IoT Sensor Network">
+                </div>
+            </div>
+            
+            <div class="tech-overview">
+                <div class="tech-content">
+                    <h3>Mobile Authentication</h3>
+                    <p>Our consumer-friendly mobile application allows anyone to instantly verify the authenticity and origin of food products with a simple scan.</p>
+                    <ul class="tech-features">
+                        <li>QR code and NFC tag scanning</li>
+                        <li>Product origin verification</li>
+                        <li>Complete history transparency</li>
+                        <li>Safety alerts and recall notifications</li>
+                    </ul>
+                </div>
+                <div class="tech-image">
+                    <img src="mobile_authentication.jpg" alt="Mobile Authentication">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Process Flow Section -->
+    <section class="section process-flow">
+        <div class="container">
+            <div class="section-heading">
+                <h2>How It Works</h2>
+                <p>VeriHarvest provides an end-to-end solution for food traceability and authentication</p>
+            </div>
+            
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-icon">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <div class="step-number">1</div>
+                    <div class="step-title">Production</div>
+                    <div class="step-description">Food products are tagged and registered in the blockchain at the source</div>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <div class="step-number">2</div>
+                    <div class="step-title">Transportation</div>
+                    <div class="step-description">IoT sensors monitor conditions during shipping and distribution</div>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div class="step-number">3</div>
+                    <div class="step-title">Retail</div>
+                    <div class="step-description">Products are verified upon arrival at retail locations</div>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="step-number">4</div>
+                    <div class="step-title">Consumer</div>
+                    <div class="step-description">Shoppers verify authenticity by scanning QR/NFC tags</div>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="step-number">5</div>
+                    <div class="step-title">Analysis</div>
+                    <div class="step-description">Data is analyzed to improve safety and efficiency</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Tech Features Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Key Technology Features</h2>
+                <p>Discover the powerful features that make VeriHarvest the leading solution for food authentication</p>
+            </div>
+            
+            <div class="tech-cards">
+                <div class="tech-card">
+                    <div class="tech-card-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Advanced Security</h3>
+                    <p>Our blockchain technology ensures that all recorded data is tamper-proof and immutable, preventing fraud and maintaining data integrity throughout the supply chain.</p>
+                </div>
+                
+                <div class="tech-card">
+                    <div class="tech-card-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3>Real-Time Updates</h3>
+                    <p>Get instant notifications and updates on product location, condition, and status as it moves through each stage of the supply chain.</p>
+                </div>
+                
+                <div class="tech-card">
+                    <div class="tech-card-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3>Data Analytics</h3>
+                    <p>Advanced analytics provide valuable insights into supply chain efficiency, product quality trends, and potential areas for improvement.</p>
+                </div>
+                
+                <div class="tech-card">
+                    <div class="tech-card-icon">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <h3>Smart Contracts</h3>
+                    <p>Automated smart contracts ensure compliance with regulatory standards and streamline transactions between supply chain partners.</p>
+                </div>
+                
+                <div class="tech-card">
+                    <div class="tech-card-icon">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <h3>API Integration</h3>
+                    <p>Easily integrate our technology with your existing systems through our comprehensive API framework.</p>
+                </div>
+                
+                <div class="tech-card">
+                    <div class="tech-card-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h3>Alert System</h3>
+                    <p>Receive instant alerts when products deviate from optimal conditions or when potential food safety issues are detected.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Technical Specifications Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Technical Specifications</h2>
+                <p>Detailed information about VeriHarvest's technical capabilities</p>
+            </div>
+            
+            <div class="specs-tabs">
+                <div class="specs-tab active" data-tab="blockchain">Blockchain</div>
+                <div class="specs-tab" data-tab="iot">IoT Network</div>
+                <div class="specs-tab" data-tab="app">Mobile App</div>
+                <div class="specs-tab" data-tab="dashboard">Dashboard</div>
+            </div>
+            
+            <div class="specs-content active" id="blockchain">
+                <ul class="specs-list">
+                    <li><strong>Protocol:</strong> Hyperledger Fabric</li>
+                    <li><strong>Consensus:</strong> Practical Byzantine Fault Tolerance (PBFT)</li>
+                    <li><strong>Smart Contracts:</strong> Custom regulatory compliance logic</li>
+                    <li><strong>Transaction Speed:</strong> 5,000+ transactions per second</li>
+                    <li><strong>Data Storage:</strong> Distributed peer-to-peer network</li>
+                    <li><strong>Security:</strong> 256-bit encryption with secure key management</li>
+                    <li><strong>Traceability:</strong> Full chain-of-custody tracking</li>
+                </ul>
+            </div>
+
+            <div class="specs-content" id="iot">
+                <ul class="specs-list">
+                    <li><strong>Sensor Types:</strong> Temperature, humidity, light, acceleration, GPS</li>
+                    <li><strong>Communication:</strong> LoRaWAN, NB-IoT, LTE-M</li>
+                    <li><strong>Battery Life:</strong> Up to 18 months per charge</li>
+                    <li><strong>Data Rate:</strong> Updates every 5-15 minutes</li>
+                    <li><strong>Range:</strong> Up to 15km in rural areas, 5km in urban environments</li>
+                    <li><strong>Durability:</strong> IP67 rated, operational from -30°C to 60°C</li>
+                    <li><strong>Certifications:</strong> FDA, USDA, EU Food Safety compliant</li>
+                </ul>
+            </div>
+            
+            <div class="specs-content" id="app">
+                <ul class="specs-list">
+                    <li><strong>Platforms:</strong> iOS (14+) and Android (8.0+)</li>
+                    <li><strong>Authentication:</strong> QR code, NFC, alphanumeric code</li>
+                    <li><strong>Features:</strong> Product history, authenticity verification, safety alerts</li>
+                    <li><strong>User Profiles:</strong> Consumer, Business, Regulatory</li>
+                    <li><strong>Language Support:</strong> 12 languages</li>
+                    <li><strong>Offline Mode:</strong> Limited functionality without internet</li>
+                    <li><strong>Size:</strong> Under 25MB</li>
+                </ul>
+            </div>
+            
+            <div class="specs-content" id="dashboard">
+                <ul class="specs-list">
+                    <li><strong>Interface:</strong> Web-based, responsive design</li>
+                    <li><strong>Data Visualization:</strong> Interactive charts, maps, and reports</li>
+                    <li><strong>User Roles:</strong> Admin, Manager, Operator, Auditor</li>
+                    <li><strong>Authentication:</strong> Multi-factor authentication</li>
+                    <li><strong>Integration:</strong> REST API, webhook support</li>
+                    <li><strong>Export Options:</strong> CSV, PDF, Excel, API</li>
+                    <li><strong>Real-time Updates:</strong> WebSocket-based live data</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section class="section faq-section">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Frequently Asked Questions</h2>
+                <p>Common questions about VeriHarvest's technology</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    How does blockchain ensure food safety? <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Blockchain technology creates an immutable record of every transaction and condition change throughout the supply chain. This ensures that all data about a food product's journey is transparent and tamper-proof. If any safety issues arise, the exact source and affected batches can be quickly identified, allowing for targeted recalls and preventing widespread food safety crises.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    What types of sensors are used in the IoT network? <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Our IoT network utilizes a variety of sensors depending on the specific food products being monitored. These include temperature sensors, humidity sensors, light exposure sensors, accelerometers for shock detection, GPS for location tracking, ethylene gas sensors for ripeness monitoring, and specialized chemical sensors for detecting contaminants or spoilage indicators. All sensors are calibrated to food safety standards and designed for minimal power consumption.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    How secure is the data on the blockchain? <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>VeriHarvest employs 256-bit encryption and secure key management protocols to ensure data security. Our permissioned blockchain network restricts access to authorized participants only, and all transactions are verified through consensus mechanisms. Additionally, sensitive commercial data remains private while still allowing for public verification of key supply chain events. Regular security audits and penetration testing ensure the continued integrity of our system.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    Can the system integrate with existing ERP and inventory management systems? <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, VeriHarvest is designed for seamless integration with existing enterprise systems. Our comprehensive API framework allows for easy connection to ERP systems, inventory management platforms, and other supply chain management tools. We provide dedicated integration support and have pre-built connectors for popular systems like SAP, Oracle, and Microsoft Dynamics. This allows businesses to leverage their existing infrastructure while gaining the benefits of blockchain-based traceability.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    How do consumers verify product authenticity? <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Consumers can verify product authenticity using the VeriHarvest mobile app. By scanning the QR code or NFC tag on the product packaging, consumers instantly access the complete history of the product from farm to store. This includes information about the producer, harvest date, processing facilities, transportation conditions, and any certifications (like organic or fair trade). The app visually confirms authenticity with a green checkmark and alerts consumers if any issues are detected.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Transform Your Supply Chain?</h2>
+            <p>Join the future of food safety and traceability with VeriHarvest's cutting-edge technology</p>
+            <div class="cta-buttons">
+                <a href="contact.html" class="btn-cta btn-primary">Request a Demo</a>
+                <a href="about.html" class="btn-cta btn-secondary">Learn More</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <i class="fas fa-seedling"></i>
+                    VeriHarvest
+                </div>
+                <p>Revolutionizing food safety and authenticity through blockchain technology and IoT solutions.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="technology.html">Technology</a></li>
+                    <li><a href="solutions.html">Solutions</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Solutions</h3>
+                <ul class="footer-links">
+                    <li><a href="solutions.html#farmers">For Farmers</a></li>
+                    <li><a href="solutions.html#processors">For Processors</a></li>
+                    <li><a href="solutions.html#distributors">For Distributors</a></li>
+                    <li><a href="solutions.html#retailers">For Retailers</a></li>
+                    <li><a href="solutions.html#regulators">For Regulators</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Tech Lane, San Francisco, CA 94107</p>
+                <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                <p><i class="fas fa-envelope"></i> info@veriharvest.com</p>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2025 VeriHarvest. All rights reserved.
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // Specs Tabs
+        const specsTabs = document.querySelectorAll('.specs-tab');
+        const specsContents = document.querySelectorAll('.specs-content');
+        
+        specsTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.getAttribute('data-tab');
+                
+                // Remove active class from all tabs and contents
+                specsTabs.forEach(t => t.classList.remove('active'));
+                specsContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                document.getElementById(target).classList.add('active');
+            });
+        });
+        
+        // FAQ Accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            
+            question.addEventListener('click', () => {
+                item.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
