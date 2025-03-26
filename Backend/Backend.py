@@ -1,19 +1,21 @@
-# Role: Backend Developer
-# Module: VeriHarvest Backend API (FastAPI + PostgreSQL) - to Store and Manage the Data
-
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-import psycopg2
-from psycopg2.extras import RealDictCursor
-import os
+import xrpl
+from xrpl.clients import JsonRpcClient
+from xrpl.wallet import Wallet
+from xrpl.transaction import safe_sign_and_autofill_transaction, send_reliable_submission
+from xrpl.models.transactions import Payment
+from xrpl.models.requests import AccountTx
+from xrpl.models.amounts import IssuedCurrencyAmount
 
 # Initialize FastAPI App
 app = FastAPI()
 
-# Database Connection
-DATABASE_URL = "postgresql://user:password@localhost:5432/veriharvest_db"
-conn = psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor)
-cursor = conn.cursor()
+# XRPL Configuration
+XRPL_RPC_URL = "https://s.altnet.rippletest.net:51234"  # Testnet RPC
+ISSUER_WALLET = Wallet(seed="YOUR_ISSUER_SEED", sequence=0)
+DESTINATION_WALLET = Wallet(seed="YOUR_DEST_SEED", sequence=0)
+client = JsonRpcClient(XRPL_RPC_URL)
 
 # Define Models
 class FoodBatch(BaseModel):
@@ -28,31 +30,30 @@ class FoodBatch(BaseModel):
 @app.post("/add_batch/")
 def add_batch(batch: FoodBatch):
     try:
-        cursor.execute("INSERT INTO food_batches (batch_id, product_name, supplier, freshness_score, blockchain_verified, status) VALUES (%s, %s, %s, %s, %s, %s)",
-                       (batch.batch_id, batch.product_name, batch.supplier, batch.freshness_score, batch.blockchain_verified, batch.status))
-        conn.commit()
-        return {"message": "Batch added successfully"}
+        payment = Payment(
+            account=ISSUER_WALLET.classic_address,
+            destination=DESTINATION_WALLET.classic_address,
+            amount=IssuedCurrencyAmount(
+                currency="FRESH",
+                issuer=ISSUER_WALLET.classic_address,
+                value=str(batch.freshness_score),
+            ),
+            memos=[
+                {"Memo": {"MemoData": batch.product_name}},
+                {"Memo": {"MemoData": batch.supplier}},
+                {"Memo": {"MemoData": batch.status}},
+            ],
+        )
+        signed_tx = safe_sign_and_autofill_transaction(payment, ISSUER_WALLET, client)
+        response = send_reliable_submission(signed_tx, client)
+        return {"message": "Batch added to XRPL", "tx_hash": response.result["hash"]}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/get_batch/{batch_id}")
-def get_batch(batch_id: int):
-    cursor.execute("SELECT * FROM food_batches WHERE batch_id = %s", (batch_id,))
-    batch = cursor.fetchone()
-    if not batch:
-        raise HTTPException(status_code=404, detail="Batch not found")
-    return batch
-
-@app.get("/get_all_batches/")
-def get_all_batches():
-    cursor.execute("SELECT * FROM food_batches")
-    batches = cursor.fetchall()
-    return batches
-
-# Run API Server
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
-
-
-
+@app.get("/get_batch/{account}")
+def get_batch(account: str):
+    try:
+        response = client.request(AccountTx(account=account))
+        return response.result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
