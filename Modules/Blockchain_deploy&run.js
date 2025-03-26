@@ -1,31 +1,39 @@
-
-Write a test in test/veriharvest.test.js:
-
 const { expect } = require("chai");
+const xrpl = require("xrpl");
 
-describe("VeriHarvest Contract", function () {
-  let VeriHarvest, veriharvest, owner;
+describe("VeriHarvest XRPL Integration", function () {
+  let client, wallet, destination;
 
-  beforeEach(async function () {
-    [owner] = await ethers.getSigners();
-    VeriHarvest = await ethers.getContractFactory("VeriHarvest");
-    veriharvest = await VeriHarvest.deploy();
-    await veriharvest.addBatch("Organic Apples", "Farm A", 95);
+  before(async function () {
+    client = new xrpl.Client("wss://s.altnet.rippletest.net:51233");
+    await client.connect();
+    wallet = xrpl.Wallet.fromSeed("YOUR_ISSUER_SEED"); // Replace with actual seed
+    destination = xrpl.Wallet.fromSeed("YOUR_DEST_SEED"); // Replace with actual seed
   });
 
-  it("Should return correct batch details", async function () {
-    const batch = await veriharvest.getBatchDetails(1);
-    expect(batch.productName).to.equal("Organic Apples");
-    expect(batch.status).to.equal("Safe");
+  it("Should submit batch details to XRPL", async function () {
+    const tx = {
+      TransactionType: "Payment",
+      Account: wallet.classicAddress,
+      Destination: destination.classicAddress,
+      Amount: {
+        currency: "FRESH",
+        issuer: wallet.classicAddress,
+        value: "95",
+      },
+      Memos: [
+        { Memo: { MemoData: Buffer.from("Organic Apples").toString("hex") } },
+        { Memo: { MemoData: Buffer.from("Farm A").toString("hex") } },
+        { Memo: { MemoData: Buffer.from("Safe").toString("hex") } },
+      ],
+    };
+
+    const signedTx = await wallet.sign(tx);
+    const response = await client.submitAndWait(signedTx.tx_blob);
+    expect(response.result.engine_result).to.equal("tesSUCCESS");
   });
 
-  it("Should update batch status", async function () {
-    await veriharvest.updateBatchStatus(1, "Warning");
-    const batch = await veriharvest.getBatchDetails(1);
-    expect(batch.status).to.equal("Warning");
+  after(async function () {
+    await client.disconnect();
   });
 });
-
-Run the test:
-
-npx hardhat test
